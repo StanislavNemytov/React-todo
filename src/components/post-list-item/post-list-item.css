@@ -2,13 +2,17 @@
   font-size: 1.25rem;
 }
 
-.app-list-item button {
+.app-list-item button:not(.submit) {
   width: 35px;
   height: 35px;
   margin: 3px;
   font-size: 17px;
   border: none;
   cursor: pointer;
+}
+
+.app-list-item button.submit {
+  margin-left: 8px;
 }
 
 .app-list-item button:focus {
@@ -64,4 +68,17 @@
 
 .app-list-item.completed .app-list-item-label {
   text-decoration: line-through;
+}
+
+.app-list-item .btn-pencil {
+  opacity: 0;
+  transition: opacity .35s;
+}
+
+.app-list-item.completed .btn-pencil {
+  display: none;
+}
+
+.app-list-item:hover .btn-pencil {
+  opacity: 1;
 }

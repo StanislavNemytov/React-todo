@@ -81,6 +81,10 @@ class App extends Component {
     this.toggleItemSome(id, "completed");
   };
 
+  onEdit = id => {
+    this.toggleItemSome(id, "edit");
+  };
+
   toggleItemSome = (id, some) => {
     this.setState(({ data }) => ({
       data: data.map(item => {
