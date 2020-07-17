@@ -6,7 +6,8 @@ class PostStatusFilter extends Component {
     super(props);
     this.buttons = [
       { name: "all", label: "Все" },
-      { name: "like", label: "Понравилось" }
+      { name: "like", label: "Понравилось" },
+      { name: "completed", label: "Выполнено" }
     ];
   }
   render() {

@@ -16,7 +16,8 @@
   outline: none;
 }
 
-.app-list-item .btn-star {
+.app-list-item .btn-star,
+.app-list-item .btn-check {
   color: #aeaeae;
 }
 
@@ -55,4 +56,12 @@
 
 .app-list-item.important .btn-star {
   color: #cecb32;
+}
+
+.app-list-item.completed .btn-check {
+  color: #85ce32;
+}
+
+.app-list-item.completed .app-list-item-label {
+  text-decoration: line-through;
 }

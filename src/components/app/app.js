@@ -12,10 +12,34 @@ class App extends Component {
     super(props);
     this.state = {
       data: [
-        { id: 1, label: "Пшёл учить React", important: true, like: false },
-        { id: 2, label: "Учу React", important: true, like: false },
-        { id: 3, label: "Забываю React...", important: false, like: false },
-        { id: 4, label: "Снова учу React!", important: false, like: false }
+        {
+          id: 1,
+          label: "Пшёл учить React",
+          important: true,
+          like: false,
+          completed: false
+        },
+        {
+          id: 2,
+          label: "Учу React",
+          important: true,
+          like: false,
+          completed: false
+        },
+        {
+          id: 3,
+          label: "Забываю React...",
+          important: false,
+          like: false,
+          completed: false
+        },
+        {
+          id: 4,
+          label: "Снова учу React!",
+          important: false,
+          like: false,
+          completed: false
+        }
       ],
       maxId: 5,
       term: "",
@@ -33,7 +57,13 @@ class App extends Component {
     this.setState(({ data, maxId }) => ({
       data: [
         ...data,
-        { id: maxId, label: body, important: false, like: false }
+        {
+          id: maxId,
+          label: body,
+          important: false,
+          like: false,
+          completed: false
+        }
       ],
       maxId: ++maxId
     }));
@@ -45,6 +75,10 @@ class App extends Component {
 
   onToggleLiked = id => {
     this.toggleItemSome(id, "like");
+  };
+
+  onToggleCompleted = id => {
+    this.toggleItemSome(id, "completed");
   };
 
   toggleItemSome = (id, some) => {
@@ -71,6 +105,7 @@ class App extends Component {
 
   filterPost(items, filter) {
     if (filter === "like") items = items.filter(item => item.like);
+    if (filter === "completed") items = items.filter(item => item.completed);
     return items;
   }
 
@@ -82,12 +117,13 @@ class App extends Component {
     const { data, term, filter } = this.state;
     const liked = data.filter(item => item.like).length;
     const allPosts = data.length;
+    const completed = data.filter(item => item.completed).length;
     const visiblePosts = this.filterPost(this.searchPost(data, term), filter);
 
     return (
       <div>
         {" "}
-        <AppHeader liked={liked} allPosts={allPosts} />
+        <AppHeader liked={liked} allPosts={allPosts} completed={completed} />
         <div className="search-panel d-flex">
           <SearchPanel onUpdateSearch={this.onUpdateSearch} />
 
@@ -101,6 +137,7 @@ class App extends Component {
           onDelete={this.deleteItem}
           onToggleImportant={this.onToggleImportant}
           onToggleLiked={this.onToggleLiked}
+          onToggleCompleted={this.onToggleCompleted}
         />
         <PostAddForm onAdd={this.addItem} />
       </div>

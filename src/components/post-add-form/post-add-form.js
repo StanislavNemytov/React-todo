@@ -31,6 +31,7 @@ class PostAddForm extends Component {
           name="body"
           value={this.state.value}
           onChange={this.handleChange}
+          autoComplete="off"
         />
         <input
           className={`btn btn-primary ${!this.state.value && "disabled"}`}

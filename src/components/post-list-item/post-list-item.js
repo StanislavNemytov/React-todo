@@ -9,13 +9,15 @@ class PostListItem extends Component {
       id,
       onToggleImportant,
       onToggleLiked,
+      onToggleCompleted,
       like,
-      important
+      important, completed
     } = this.props;
 
     let classNames = "app-list-item d-flex justify-content-between";
     important && (classNames += " important");
     like && (classNames += " like");
+    completed && (classNames += " completed");
 
     return (
       <div className={classNames}>
@@ -29,6 +31,13 @@ class PostListItem extends Component {
             onClick={() => onToggleImportant(id)}
           >
             <i className="fa fa-star"></i>
+          </button>
+          <button
+            type="button"
+            className="btn-check btn-sm"
+            onClick={() => onToggleCompleted(id)}
+          >
+            <i className="fa fa-check"></i>
           </button>
           <button
             type="button"
