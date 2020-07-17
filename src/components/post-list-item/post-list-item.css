@@ -30,28 +30,21 @@
 }
 
 .app-list-item .fa-heart {
-  width: 35px;
-  height: 35px;
   text-align: center;
-  line-height: 35px;
   font-size: 16px;
-  color: red;
-  transition: 0.3s all;
-  transform: translateX(30px);
-  opacity: 0;
+  color: #aeaeae;
+  transition: color 0.35s;
 }
 
 .app-list-item-label {
   display: block;
   line-height: 35px;
-  cursor: pointer;
   user-select: none;
   transition: 0.5s all;
 }
 
 .app-list-item.like .fa-heart {
-  opacity: 1;
-  transform: translateX(0px);
+  color: red
 }
 
 .app-list-item.important .app-list-item-label {
@@ -79,6 +72,19 @@
   display: none;
 }
 
-.app-list-item:hover .btn-pencil {
+.app-list-item .label {
+  display: flex;
+  align-items: center;
+}
+
+.app-list-item .label .checkbox {
+  cursor: pointer;
+  margin-right: 12px;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+}
+
+.app-list-item .label:hover .btn-pencil {
   opacity: 1;
 }

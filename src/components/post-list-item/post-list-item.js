@@ -17,7 +17,7 @@ class PostListItem extends Component {
 
   setNewValue = newValue => {
     this.editItem();
-    this.setState(({ value }) => ({ value: newValue }));
+    this.setState({ value: newValue });
   };
 
   render() {
@@ -28,7 +28,10 @@ class PostListItem extends Component {
       onToggleCompleted,
       like,
       important,
-      completed
+      onToggleLiked,
+      completed,
+      selected,
+      onToggleSelect
     } = this.props;
 
     let classNames = "app-list-item d-flex justify-content-between";
@@ -40,9 +43,11 @@ class PostListItem extends Component {
       <EditItem value={this.state.value} setNewValue={this.setNewValue} />
     ) : (
       <ItemText
-        props={this.props}
         editItem={this.editItem}
         state={this.state}
+        id={id}
+        selected={selected}
+        onToggleSelect={onToggleSelect}
       />
     );
 
@@ -75,22 +80,33 @@ class PostListItem extends Component {
             <i className="fa fa-trash-o"></i>
           </button>
 
-          <i className="fa fa-heart"></i>
+          <button
+            type="button"
+            className="btn-heart btn-sm"
+            onClick={() => onToggleLiked(id)}
+          >
+            <i className="fa fa-heart"></i>
+          </button>
         </div>
       </div>
     );
   }
 }
 
-const ItemText = ({ props, editItem, state }) => {
-  const { id, onToggleLiked } = props;
+const ItemText = ({ editItem, state, id, selected, onToggleSelect }) => {
   const { value } = state;
 
   return (
-    <div className="d-flex">
-      <span className="app-list-item-label" onClick={() => onToggleLiked(id)}>
-        {value}
-      </span>
+    <div className="d-flex label">
+      <input
+        className="checkbox"
+        type="checkbox"
+        name="selected"
+        id={id}
+        checked={selected}
+        onChange={() => onToggleSelect(id)}
+      />
+      <span className="app-list-item-label">{value}</span>
       <button
         type="button"
         className="btn-pencil btn-sm ml-3"

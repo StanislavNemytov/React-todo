@@ -21,7 +21,6 @@ class PostAddForm extends Component {
   };
 
   render() {
-    // const submitClasses = `btn btn-primary ${!this.state.value && "disabled"}`;
     return (
       <form className="bottom-panel d-flex" onSubmit={this.addItem}>
         <input

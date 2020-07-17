@@ -7,7 +7,9 @@ const PostList = ({
   onDelete,
   onToggleImportant,
   onToggleLiked,
-  onToggleCompleted,onEdit
+  onToggleCompleted,
+  onEdit,
+  onToggleSelect
 }) => {
   return (
     <ul className="app-list list-group">
@@ -23,6 +25,7 @@ const PostList = ({
               onToggleLiked={onToggleLiked}
               onToggleCompleted={onToggleCompleted}
               onEdit={onEdit}
+              onToggleSelect={onToggleSelect}
             />
           </li>
         );

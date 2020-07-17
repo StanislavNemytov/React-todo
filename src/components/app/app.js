@@ -6,6 +6,7 @@ import PostList from "../post-list";
 import PostAddForm from "../post-add-form";
 
 import "./app.css";
+import HighlightPost from "../post-highlight";
 
 class App extends Component {
   constructor(props) {
@@ -14,41 +15,54 @@ class App extends Component {
       data: [
         {
           id: 1,
-          label: "Пшёл учить React",
-          important: true,
-          like: false,
-          completed: false
-        },
-        {
-          id: 2,
           label: "Учу React",
           important: true,
           like: false,
-          completed: false
+          completed: false,
+          selected: false
+        },
+        {
+          id: 2,
+          label: "Выполненное нельзя отредактировать",
+          important: true,
+          like: false,
+          completed: true,
+          selected: false
         },
         {
           id: 3,
-          label: "Забываю React...",
+          label: "Читаю документацию",
           important: false,
           like: false,
-          completed: false
+          completed: false,
+          selected: true
         },
         {
           id: 4,
-          label: "Снова учу React!",
+          label: "Для редактирования нажмите на кнопку с карандашом",
           important: false,
           like: false,
-          completed: false
+          completed: false,
+          selected: true
+        },
+        {
+          id: 5,
+          label: "Чтобы поставить лайк, кликните на текст",
+          important: false,
+          like: true,
+          completed: false,
+          selected: false
         }
       ],
-      maxId: 5,
+      maxId: 6,
       term: "",
-      filter: "all"
+      filter: "all",
+      highlightedAll: false
     };
   }
 
-  deleteItem = id => {
-    this.setState(({ data }) => ({
+  deleteItem = async id => {
+    await this.setState(({ data }) => ({
       data: data.filter(item => item.id !== id)
     }));
   };
@@ -62,7 +76,8 @@ class App extends Component {
           label: body,
           important: false,
           like: false,
-          completed: false
+          completed: false,
+          selected: false
         }
       ],
       maxId: ++maxId
@@ -117,15 +132,65 @@ class App extends Component {
     this.setState({ filter });
   };
 
+  onToggleHighlight = () => {
+    this.setState(({ highlightedAll }) => ({
+      highlightedAll: !highlightedAll
+    }));
+  };
+
+  componentDidMount = () => {
+    this.checkHighlight();
+  };
+
+  onToggleSelect = async id => {
+    await this.toggleItemSome(id, "selected");
+    this.checkHighlight();
+  };
+
+  checkHighlight = () => {
+    const { data, highlightedAll } = this.state;
+    const allPosts = data.length;
+    const selectedPosts = data.filter(item => item.selected).length || 0;
+
+    if (selectedPosts === allPosts && !highlightedAll) this.onToggleHighlight();
+    if (selectedPosts !== allPosts && highlightedAll) this.onToggleHighlight();
+    if (allPosts === 0) this.onToggleHighlight();
+  };
+
+  onToggleSelectAll = posts => {
+    const oldData = this.state.data;
+    const arrId = posts.map(item => item.id);
+    const newData = oldData.map(item => {
+      if (arrId.includes(item.id)) {
+        item.selected = !this.state.highlightedAll;
+      }
+      return item;
+    });
+
+    this.setState({
+      data: newData
+    });
+    this.onToggleHighlight();
+  };
+
+  removeSelectedPosts = async posts => {
+    await posts.forEach(item => {
+      if (item.selected) this.deleteItem(item.id);
+    });
+    this.checkHighlight();
+  };
+
   render() {
     const { data, term, filter } = this.state;
     const liked = data.filter(item => item.like).length;
     const allPosts = data.length;
     const completed = data.filter(item => item.completed).length;
     const visiblePosts = this.filterPost(this.searchPost(data, term), filter);
+    const selectedPosts = visiblePosts.filter(item => item.selected).length;
+    const highlightedAll = selectedPosts === visiblePosts.length;
 
     return (
-      <div>
+      <>
         {" "}
         <AppHeader liked={liked} allPosts={allPosts} completed={completed} />
         <div className="search-panel d-flex">
@@ -136,15 +201,23 @@ class App extends Component {
             onFilterSelect={this.onFilterSelect}
           />
         </div>
+        <HighlightPost
+          onToggleSelectAll={this.onToggleSelectAll}
+          highlightedAll={highlightedAll}
+          selectedPosts={selectedPosts}
+          removeSelectedPosts={this.removeSelectedPosts}
+          posts={visiblePosts}
+        />
         <PostList
           posts={visiblePosts}
           onDelete={this.deleteItem}
           onToggleImportant={this.onToggleImportant}
           onToggleLiked={this.onToggleLiked}
           onToggleCompleted={this.onToggleCompleted}
+          onToggleSelect={this.onToggleSelect}
         />
         <PostAddForm onAdd={this.addItem} />
-      </div>
+      </>
     );
   }
 }
