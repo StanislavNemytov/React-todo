@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./post-highlight.scss";
 
 class HighlightPost extends Component {
   render() {

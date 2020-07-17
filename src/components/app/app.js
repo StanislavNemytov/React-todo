@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import AppHeader from "../app-header";
-import SearchPanel from "../search-panel";
-import PostStatusFilter from "../post-status-filter";
-import PostList from "../post-list";
-import PostAddForm from "../post-add-form";
+import AppHeader from "../app-header/app-header";
+import SearchPanel from "../search-panel/search-panel";
+import PostStatusFilter from "../post-status-filter/post-status-filter";
+import PostList from "../post-list/post-list";
+import PostAddForm from "../post-add-form/post-add-form";
+import HighlightPost from "../post-highlight/post-highlight";
 
 import "./app.css";
-import HighlightPost from "../post-highlight";
 
 class App extends Component {
   constructor(props) {
@@ -142,8 +142,8 @@ class App extends Component {
     this.checkHighlight();
   };
 
-  onToggleSelect = async id => {
-    await this.toggleItemSome(id, "selected");
+  onToggleSelect = id => {
+    this.toggleItemSome(id, "selected");
     this.checkHighlight();
   };
 
@@ -173,8 +173,8 @@ class App extends Component {
     this.onToggleHighlight();
   };
 
-  removeSelectedPosts = async posts => {
-    await posts.forEach(item => {
+  removeSelectedPosts = posts => {
+    posts.forEach(item => {
       if (item.selected) this.deleteItem(item.id);
     });
     this.checkHighlight();

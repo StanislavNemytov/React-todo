@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./post-list-item.css";
-import EditItem from "../editItem";
+import EditItem from "../editItem/editItem";
 
 class PostListItem extends Component {
   constructor(props) {
