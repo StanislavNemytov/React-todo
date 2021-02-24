@@ -9,11 +9,11 @@
     "babel-eslint": "^10.1.0",
     "bootstrap": "4",
     "eslint": "6.6.0",
-    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "reactstrap": "^8.5.1",
+    "sass": "^1.32.8",
     "styled-components": "^5.1.1"
   },
   "scripts": {
