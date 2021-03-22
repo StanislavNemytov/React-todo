@@ -7,6 +7,9 @@
 - SCSS
 - Styled components
 
+
+[Demo](https://react-todo-sn.netlify.app)
+
 ## Clone and initializing :
 ```
 git clone https://github.com/StanislavNemytov/React-todo.git myDir
